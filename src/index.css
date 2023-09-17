@@ -13,7 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+.logo {
+  font-weight: bolder; 
+  font-style: italic;
+  
+}
 a {
   font-weight: 500;
   color: #646cff;
