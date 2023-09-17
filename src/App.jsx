@@ -12,8 +12,8 @@ const ARBITRARY_GOAL = 20000;
 function App({ savingsGoal, purpose }) {
 
 
-  const [selectedMonth, setSelectedMonth] = useState(null);
-  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
   const months = [
     "All Year",
@@ -49,8 +49,8 @@ function App({ savingsGoal, purpose }) {
     {}
   );
 
-  const [showIncome, setShowIncome] = useState(true);
-  const [showExpenses, setShowExpenses] = useState(true);
+  const [showIncome, setShowIncome] = useState(false);
+  const [showExpenses, setShowExpenses] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [keywordToCategoryMapping, setKeywordToCategoryMapping] = useState({
     meny: "Dagligvare",
@@ -218,6 +218,9 @@ function App({ savingsGoal, purpose }) {
       setShowSavingsGoal(false);
     }
     console.log(accountType);
+    
+    console.log(showExpenses)
+    console.log(showIncome)
   };
 
   const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
@@ -328,6 +331,7 @@ function App({ savingsGoal, purpose }) {
                     ))}
                 </div>
               </div>
+              {(showExpenses || showIncome) && (
               <div className="dateDropdown">
                 <div className="monthDropdown">
                   <label></label>
@@ -360,6 +364,7 @@ function App({ savingsGoal, purpose }) {
                   </select>
                 </div>
               </div>
+              )}
               <div className="positive-progress-bars-container">
                 <h3>
                   {" "}
@@ -411,7 +416,7 @@ function App({ savingsGoal, purpose }) {
 
               {showTransactions && (
                 <div className="selected-category-transactions">
-                  <h3>
+                  <h3> 
                     Transactions{selectedCategory && ` for ${selectedCategory}`}
                   </h3>
                   <ul>
