@@ -50,10 +50,7 @@ Improvements and Reflections
 
 - Allow user to set goals in reducing expenses or increasing savings in relation to previous months (maybe compare with similar month, last year)
 - Gamification: allow user to achieve some sort of badge/level/achievement to be shared locally amongst friends (like Strava). Not sure how this would be implented.
-- I wanted to implement a chat.gpt promp with the users Goal-description: Motivating someone requires understanding their goals, aspirations, and reasons behind those goals. So, if you were to tell me what you're saving for, I would use a mix of empathy, visualization, and positive reinforcement to motivate you. Below is what chat.GPT would contribute with if I had the know-how and time for the deadline of this project.
-
-```bash
-Here's a hypothetical scenario for demonstration purposes:
+- I wanted to implement a chat.gpt promp with the users Goal-description: Motivating someone requires understanding their goals, aspirations, and reasons behind those goals. So, if you were to tell me what you're saving for, I would use a mix of empathy, visualization, and positive reinforcement to motivate you. Below is what chat.GPT would contribute with if I had the know-how.
 
 Your Goal: "I'm saving up for a two-week vacation to Japan."
 
@@ -74,4 +71,3 @@ Stay Accountable: "Share your goal with a close friend or family member. Having 
 Revisit and Reflect: "Regularly remind yourself of why this goal matters to you. Maybe keep a photo of Japan on your desk or set it as your phone's wallpaper. Let it serve as a daily reminder of what you're working towards."
 
 Remember, motivation is deeply personal. What works for one person might not work for another. But understanding the "why" behind your goal, visualizing the outcome, and regularly reminding yourself of the rewards can be powerful drivers to keep you on track!
-```
