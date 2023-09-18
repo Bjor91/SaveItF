@@ -6,7 +6,7 @@ Here you can describe what tasks you decided to solve.
 
 First: Open terminal in project folder.
 run "npm install"
-to run locally: "npm run dev"
+to run locally: "npm run dev".
 
 This application is already running via netlify. Check it out on this URL: 
 
