@@ -17,21 +17,21 @@ function App({ savingsGoal, purpose }) {
 
   const months = [
     "All Year",
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
   ];
 
-  const years = ["2020", "2021", "2022", "2023"];
+  const years = ["2023"];
   const [isScrollable, setIsScrollable] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [accountId, setAccountId] = useState("brukskonto");
@@ -158,12 +158,22 @@ function App({ savingsGoal, purpose }) {
           `http://localhost:8080/api/v1/accounts/${accountId}/withTransactions`
         );
         if (response.data && response.data.transactions) {
-          setTransactionData(response.data.transactions);
+          let filteredTransactions = response.data.transactions;
 
+            // Filter transactions based on selected month
+            if (selectedMonth) {
+                filteredTransactions = filteredTransactions.filter(transaction => {
+                    const month = transaction.date.split(".")[1];
+                    return month === selectedMonth;
+                });
+            }
+          setTransactionData(filteredTransactions);
+
+          
           // Calculate positive and negative transaction totals
           const positiveTotals = {};
           const negativeTotals = {};
-          response.data.transactions.forEach((transaction) => {
+          filteredTransactions.forEach((transaction) => {
             // If no keyword matches, categorize as "Other Income" or "Other Expenses" based on the transaction amount
             let category = null;
 
@@ -198,7 +208,7 @@ function App({ savingsGoal, purpose }) {
       }
     };
     fetchTransactions();
-  }, [accountId]);
+  }, [accountId, selectedMonth]);
 
   const handleSetConstant = (
     newAccountId,
@@ -217,10 +227,8 @@ function App({ savingsGoal, purpose }) {
     } else {
       setShowSavingsGoal(false);
     }
-    console.log(accountType);
-    
-    console.log(showExpenses)
-    console.log(showIncome)
+    console.log(selectedMonth)
+    console.log(selectedYear)
   };
 
   const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
@@ -337,7 +345,13 @@ function App({ savingsGoal, purpose }) {
                   <label></label>
                   <select
                     value={selectedMonth}
-                    onChange={(e) => setSelectedMonth(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value ==="All Year") {
+                        setSelectedMonth("");
+                      } else {
+                        setSelectedMonth(e.target.value);
+                      }}
+                    }
                   >
                     {months.map((month, index) => (
                       <option
