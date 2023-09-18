@@ -54,7 +54,9 @@ Improvements and Reflections
 
 - Allow user to set goals in reducing expenses or increasing savings in relation to previous months (maybe compare with similar month, last year)
 - Gamification: allow user to achieve some sort of badge/level/achievement to be shared locally amongst friends (like Strava). Not sure how this would be implented.
-- I wanted to implement a chat.gpt promp with the users Goal-description: Motivating someone requires understanding their goals, aspirations, and reasons behind those goals. So, if you were to tell me what you're saving for, I would use a mix of empathy, visualization, and positive reinforcement to motivate you. Below is what chat.GPT would contribute with if I had the know-how.
+- I wanted to implement a chat.gpt promp with the users Goal-description. Below is what chat.GPT thinks it would contribute with if I had the know-how:
+
+Motivating someone requires understanding their goals, aspirations, and reasons behind those goals. So, if you were to tell me what you're saving for, I would use a mix of empathy, visualization, and positive reinforcement to motivate you.
 
 Your Goal: "I'm saving up for a two-week vacation to Japan."
 
