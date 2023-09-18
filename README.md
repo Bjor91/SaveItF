@@ -4,7 +4,13 @@ Here you can describe what tasks you decided to solve.
 
 ## How to run
 
-this application is already running via netlify. Can be run with 
+First: Open terminal in project folder.
+run "npm install"
+to run locally: "npm run dev"
+
+This application is already running via netlify. Check it out on this URL: 
+
+
 
 ## Comments
 Comments regaring design choices, decisions, or anything at all.
