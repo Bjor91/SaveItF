@@ -8,7 +8,8 @@ First: Open terminal in project folder.
 run "npm install"
 to run locally: "npm run dev".
 
-This application is already running via netlify. Check it out on this URL: 
+This application is already running via netlify. Check it out on this URL:
+https://main--spontaneous-banoffee-5b72ea.netlify.app/
 
 
 
