@@ -93,7 +93,7 @@ function App({ savingsGoal, purpose }) {
     tempo: "Spise/drikke ute",
     xxl: "Sportsutstyr",
     vinmonopolet: "Dagligvare",
-    legal: "spise/drikke ute",
+    legal: "Spise/drikke ute",
     stereo: "Spise/drikke ute",
     zettle: "Spise/drikke ute",
     "may sawai": "Ferie",
