@@ -25,6 +25,10 @@ To run the app locally:
    ```bash
    npm install
    ```
+3. Start the development server
+   ```bash
+   npm run dev
+   ```
 
 ## Important Notes
 
