@@ -10,8 +10,6 @@ import { Link } from "react-router-dom";
 const ARBITRARY_GOAL = 20000;
 
 function App({ savingsGoal, purpose }) {
-
-
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
@@ -160,16 +158,17 @@ function App({ savingsGoal, purpose }) {
         if (response.data && response.data.transactions) {
           let filteredTransactions = response.data.transactions;
 
-            // Filter transactions based on selected month
-            if (selectedMonth) {
-                filteredTransactions = filteredTransactions.filter(transaction => {
-                    const month = transaction.date.split(".")[1];
-                    return month === selectedMonth;
-                });
-            }
+          // Filter transactions based on selected month
+          if (selectedMonth) {
+            filteredTransactions = filteredTransactions.filter(
+              (transaction) => {
+                const month = transaction.date.split(".")[1];
+                return month === selectedMonth;
+              }
+            );
+          }
           setTransactionData(filteredTransactions);
 
-          
           // Calculate positive and negative transaction totals
           const positiveTotals = {};
           const negativeTotals = {};
@@ -227,8 +226,8 @@ function App({ savingsGoal, purpose }) {
     } else {
       setShowSavingsGoal(false);
     }
-    console.log(selectedMonth)
-    console.log(selectedYear)
+    console.log(selectedMonth);
+    console.log(selectedYear);
   };
 
   const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
@@ -266,7 +265,7 @@ function App({ savingsGoal, purpose }) {
           <div>
             <div className="card">
               <h2>
-                 {currentAccountType} balance: {currentOwnerBalance}{" "}
+                {currentAccountType} balance: {currentOwnerBalance}{" "}
                 {currentOwnerCurrency}
               </h2>
             </div>
@@ -340,44 +339,44 @@ function App({ savingsGoal, purpose }) {
                 </div>
               </div>
               {(showExpenses || showIncome) && (
-              <div className="dateDropdown">
-                <div className="monthDropdown">
-                  <label></label>
-                  <select
-                    value={selectedMonth}
-                    onChange={(e) => {
-                      if (e.target.value ==="All Year") {
-                        setSelectedMonth("");
-                      } else {
-                        setSelectedMonth(e.target.value);
+                <div className="dateDropdown">
+                  <div className="monthDropdown">
+                    <label></label>
+                    <select
+                      value={selectedMonth}
+                      onChange={(e) => {
+                        if (e.target.value === "All Year") {
+                          setSelectedMonth("");
+                        } else {
+                          setSelectedMonth(e.target.value);
+                        }
                       }}
-                    }
-                  >
-                    {months.map((month, index) => (
-                      <option
-                        key={index}
-                        value={month === "All Year" ? null : month}
-                      >
-                        {month}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                    >
+                      {months.map((month, index) => (
+                        <option
+                          key={index}
+                          value={month === "All Year" ? null : month}
+                        >
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div className="yearDropdown">
-                  <label></label>
-                  <select
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                  >
-                    {years.map((year, index) => (
-                      <option key={index} value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="yearDropdown">
+                    <label></label>
+                    <select
+                      value={selectedYear}
+                      onChange={(e) => setSelectedYear(e.target.value)}
+                    >
+                      {years.map((year, index) => (
+                        <option key={index} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </div>
               )}
               <div className="positive-progress-bars-container">
                 <h3>
@@ -430,7 +429,7 @@ function App({ savingsGoal, purpose }) {
 
               {showTransactions && (
                 <div className="selected-category-transactions">
-                  <h3> 
+                  <h3>
                     Transactions{selectedCategory && ` for ${selectedCategory}`}
                   </h3>
                   <ul>
@@ -513,7 +512,7 @@ function App({ savingsGoal, purpose }) {
         )}
       </div>
       <img src={yourImage} alt="Example Image" width="900" />
-      
+
       <h2>Don't let your dreams be dreams</h2>
     </>
   );
