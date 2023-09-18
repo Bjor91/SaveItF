@@ -12,9 +12,13 @@ Features:
 - Visibility Controls: There are toggles to control the visibility of certain UI elements, such as transactions, savings goals, income, and expenses.
 - Savings Goal: Users can set and monitor savings goals, providing motivation and clear financial targets.
 
-## How to run
+## Prerequisites:
 
-Prerequisite: Ensure the backend service is running LOCALLY (see Important Notes below).
+Node.js and npm: Before running this application locally, ensure that you have Node.js and npm (comes with Node.js) installed on your machine.
+
+Ensure the backend service is running LOCALLY (see Important Notes below).
+
+## How to run
 
 The application is hosted on Netlify and can be accessed here: [https://main--spontaneous-banoffee-5b72ea.netlify.app/](https://main--spontaneous-banoffee-5b72ea.netlify.app/)
 
