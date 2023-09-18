@@ -1,36 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
+import { months, years, keywordToCategoryMapping } from './config';
 import axios from "axios";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import yourImage from "./assets/images/53046423664_b63955243d_6k.jpg";
-import { Link } from "react-router-dom";
 
 const ARBITRARY_GOAL = 20000;
 
 function App({ savingsGoal, purpose }) {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
-
-  const months = [
-    "All Year",
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-
-  const years = ["2023"];
-  const [isScrollable, setIsScrollable] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [accountId, setAccountId] = useState("brukskonto");
   const [accountData, setAccountData] = useState([]);
@@ -40,88 +21,12 @@ function App({ savingsGoal, purpose }) {
   const [showTransactions, setShowTransactions] = useState(false);
   const [showSavingsGoal, setShowSavingsGoal] = useState(false);
   const [currentAccountType, setCurrentAccountType] = useState("Savings");
-  const [negativeTransactionTotals, setNegativeTransactionTotals] = useState(
-    {}
-  );
-  const [positiveTransactionTotals, setPositiveTransactionTotals] = useState(
-    {}
-  );
-
+  const [negativeTransactionTotals, setNegativeTransactionTotals] = useState({});
+  const [positiveTransactionTotals, setPositiveTransactionTotals] = useState({});
   const [showIncome, setShowIncome] = useState(false);
   const [showExpenses, setShowExpenses] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [keywordToCategoryMapping, setKeywordToCategoryMapping] = useState({
-    meny: "Dagligvare",
-    narvesen: "Dagligvare",
-    sammen: "Cafè",
-    platou: "Sportsutstyr",
-    "havn hjellestad": "Cafè",
-    rema: "Dagligvare",
-    coop: "Dagligvare",
-    ica: "Dagligvare",
-    bunnpris: "Dagligvare",
-    kiwi: "Dagligvare",
-    spar: "Dagligvare",
-    felles: "Overføring til felleskonto",
-    vipps: "Overføringer via Vipps",
-    sport: "Sportsutstyr",
-    gym: "Gym membership",
-    outdoor: "Sportsutstyr",
-    subscription: "Subscriptions",
-    "redd barna": "Subscriptions",
-    "apple.com": "Subscriptions",
-    vinyl: "Spise/drikke ute",
-    fjell: "Spise/drikke ute",
-    skyss: "Kollektivtransport",
-    "electronic arts": "Gaming",
-    apotek: "Medisin",
-    steam: "Gaming",
-    zalando: "Klær",
-    overføring: "Sparing ",
-    kasse: "Lånekassen",
-    valeri: "Spise/drikke ute",
-    kino: "Kino",
-    eleven: "Spise/drikke ute",
-    dromedar: "cafè",
-    fantofthallen: "Sportsutstyr",
-    amazon: "Subscriptions",
-    "coca-cola": "Spise/drikke ute",
-    mcd: "Spise/drikke ute",
-    faktura: "Faktura",
-    tempo: "Spise/drikke ute",
-    xxl: "Sportsutstyr",
-    vinmonopolet: "Dagligvare",
-    legal: "Spise/drikke ute",
-    stereo: "Spise/drikke ute",
-    zettle: "Spise/drikke ute",
-    "may sawai": "Ferie",
-    trevarefabrikken: "Ferie",
-    travel: "Ferie",
-    svolvaer: "Ferie",
-    point: "Ferie",
-    "avis rent": "Ferie",
-    kebab: "Spise/drikke ute",
-    elbil: "Bil",
-    mobil: "Telefon",
-    ahlens: "Klær",
-    cafe: "Cafè",
-    systembolaget: "Ferie",
-    "a days march": "Klær",
-    "recharge sweden": "Bil",
-    shell: "Bil",
-    "fra meg til noen": "Overføring fra noen via vipps",
-    "til meg fra noen": "Overføring til noen via vipps",
-    chili: "Telefon",
-    "fredrik & l": "Dagligvare",
-    "baker brun": "cafè",
-    hotel: "Ferie",
-    ferie: "Ferie",
-    elkjoep: "Elektronikk",
-    espresso: "cafè",
-    "hjelle bakeren": "cafè",
 
-    // ... add more mappings as needed
-  });
   const sortTransactions = (transactions, ascending = false) => {
     return transactions.slice().sort((a, b) => {
       if (ascending) {
@@ -131,7 +36,11 @@ function App({ savingsGoal, purpose }) {
       }
     });
   };
+  const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
 
+  const toggleShowTransactions = () => {
+    setShowTransactions(!showTransactions);
+  };
   useEffect(() => {
     const container = document.querySelector(".progress-bars-container");
     if (container) {
@@ -230,11 +139,7 @@ function App({ savingsGoal, purpose }) {
     console.log(selectedYear);
   };
 
-  const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
-
-  const toggleShowTransactions = () => {
-    setShowTransactions(!showTransactions);
-  };
+  
 
   return (
     <>
