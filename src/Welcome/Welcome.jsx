@@ -18,7 +18,7 @@ function Welcome({ savingsGoal, setSavingsGoal, purpose, setPurpose }) {
       setLoading(false);
       setMessage("");
       navigate("/app");
-    }, 20000);
+    }, 10000);
   };
 
   const handleSubmit = (event) => {

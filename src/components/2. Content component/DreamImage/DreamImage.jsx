@@ -6,7 +6,7 @@ function DreamImage({ goal }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState(null);
 
-  const apiKey = import.meta.env.REACT_APP_PEXELS_KEY;
+  const apiKey = 'UU4O7idUGf9OoxQiN0ClPheNZGDSuL1Yoq2Qz9Cdbef3g5l1YVlSSQKZ';
 
   useEffect(() => {
     if (!goal) return; // Prevent making requests when goal is null or undefined
