@@ -8,7 +8,7 @@ import { useState } from "react";
 
 function Main() {
   const [savingsGoal, setSavingsGoal] = useState(40000);
-  const [purpose, setPurpose] = useState("Rainy day fund");
+  const [purpose, setPurpose] = useState("Rainy Day Fund");
 
   return (
     <Router>

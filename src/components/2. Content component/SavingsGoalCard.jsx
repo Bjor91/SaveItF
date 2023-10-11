@@ -5,12 +5,13 @@ const SavingsGoalCard = ({
   savingsGoal,
   progressPercentage,
   currentOwnerCurrency,
+  purpose,
 }) => {
   return (
     <div className="goal-card">
       <h2>Savings Goal</h2>
       <p>
-        Your savings goal: {savingsGoal} {currentOwnerCurrency}
+         {savingsGoal} {currentOwnerCurrency} for {purpose}
       </p>
       <div className="progress-circle">
         <CircularProgressbar

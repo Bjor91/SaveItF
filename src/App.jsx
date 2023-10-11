@@ -120,6 +120,7 @@ function App({ savingsGoal, purpose }) {
                 savingsGoal={savingsGoal}
                 progressPercentage={progressPercentage}
                 currentOwnerCurrency={currentOwnerCurrency}
+                purpose = {purpose}
               />
             </div>
             
