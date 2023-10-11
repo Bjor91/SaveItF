@@ -1,11 +1,21 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
-import { months, years, keywordToCategoryMapping } from './config';
+import { months, years, keywordToCategoryMapping } from "./config";
 import axios from "axios";
-import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import yourImage from "./assets/images/53046423664_b63955243d_6k.jpg";
+
+import Header from "./components/1. Header component/Header";
+import AccountButtonsContainer from "./components/1. Header component/AccountButtonsContainer";
+import SavingsGoalCard from "./components/2. Content component/SavingsGoalCard";
+import Footer from "./components/3. Footer component/Footer component";
+
+import TransactionDropdown from "./components/2. Content component/transActionDropdown";
+import ExpenseIncomeProgressbars from "./components/2. Content component/Expenses and Income visuals/ExpenseIncomeProgressbars";
+import { fetchTransactions } from "./components/4. Utility component/fetchTransactions";
+import { fetchAccounts } from "./components/4. Utility component/fetchAccounts";
+import { handleIsScrollable } from "./components/4. Utility component/handleIsScrollable";
 
 const ARBITRARY_GOAL = 20000;
 
@@ -21,8 +31,13 @@ function App({ savingsGoal, purpose }) {
   const [showTransactions, setShowTransactions] = useState(false);
   const [showSavingsGoal, setShowSavingsGoal] = useState(false);
   const [currentAccountType, setCurrentAccountType] = useState("Savings");
-  const [negativeTransactionTotals, setNegativeTransactionTotals] = useState({});
-  const [positiveTransactionTotals, setPositiveTransactionTotals] = useState({});
+  const [negativeTransactionTotals, setNegativeTransactionTotals] = useState(
+    {}
+  );
+  const [positiveTransactionTotals, setPositiveTransactionTotals] = useState(
+    {}
+  );
+  const [isScrollable, setIsScrollable] = useState(false);
   const [showIncome, setShowIncome] = useState(false);
   const [showExpenses, setShowExpenses] = useState(false);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -36,86 +51,28 @@ function App({ savingsGoal, purpose }) {
       }
     });
   };
-  const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
 
+  const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
   const toggleShowTransactions = () => {
     setShowTransactions(!showTransactions);
   };
   useEffect(() => {
-    const container = document.querySelector(".progress-bars-container");
-    if (container) {
-      setIsScrollable(container.scrollHeight > container.clientHeight);
-    }
-  }, []);
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/accounts")
-      .then((response) => {
-        setAccountData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching accounts", error);
-      });
+    handleIsScrollable(setIsScrollable);
   }, []);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/v1/accounts/${accountId}/withTransactions`
-        );
-        if (response.data && response.data.transactions) {
-          let filteredTransactions = response.data.transactions;
+    fetchAccounts(setAccountData);
+  }, []);
 
-          // Filter transactions based on selected month
-          if (selectedMonth) {
-            filteredTransactions = filteredTransactions.filter(
-              (transaction) => {
-                const month = transaction.date.split(".")[1];
-                return month === selectedMonth;
-              }
-            );
-          }
-          setTransactionData(filteredTransactions);
-
-          // Calculate positive and negative transaction totals
-          const positiveTotals = {};
-          const negativeTotals = {};
-          filteredTransactions.forEach((transaction) => {
-            // If no keyword matches, categorize as "Other Income" or "Other Expenses" based on the transaction amount
-            let category = null;
-
-            for (let keyword in keywordToCategoryMapping) {
-              if (transaction.description.toLowerCase().includes(keyword)) {
-                category = keywordToCategoryMapping[keyword];
-                break;
-              }
-            }
-
-            // If no keyword matches, categorize as "Other Income" or "Other Expenses" based on the transaction amount
-            if (!category) {
-              category =
-                transaction.amount >= 0 ? "Other Income" : "Other Expenses";
-            }
-
-            // Add the transaction amount to the respective totals dictionary based on the transaction amount
-            if (transaction.amount >= 0) {
-              positiveTotals[category] =
-                (positiveTotals[category] || 0) + transaction.amount;
-            } else {
-              negativeTotals[category] =
-                (negativeTotals[category] || 0) + transaction.amount;
-            }
-          });
-
-          setPositiveTransactionTotals(positiveTotals);
-          setNegativeTransactionTotals(negativeTotals);
-        }
-      } catch (error) {
-        console.error("Error fetching transactions", error);
-      }
-    };
-    fetchTransactions();
+  useEffect(() => {
+    fetchTransactions(
+      accountId,
+      selectedMonth,
+      setTransactionData,
+      setPositiveTransactionTotals,
+      setNegativeTransactionTotals,
+      keywordToCategoryMapping
+    );
   }, [accountId, selectedMonth]);
 
   const handleSetConstant = (
@@ -138,289 +95,68 @@ function App({ savingsGoal, purpose }) {
     console.log(selectedMonth);
     console.log(selectedYear);
   };
-
-  
-
   return (
     <>
-      <div className="dateButtons"></div>
-      <h1 className="logo">SaveIt</h1>
+      <AccountButtonsContainer
+        accountData={accountData}
+        handleSetConstant={handleSetConstant}
+      />
+      <Header />
 
-      <div className="button-container">
-        {accountData.map((account) => (
-          <button
-            key={account.id}
-            onClick={() =>
-              handleSetConstant(
-                account.id,
-                account.balance,
-                account.currency,
-                account.owner,
-                account.account_type
-              )
-            }
-          >
-            {account.account_type}
-          </button>
-        ))}
-      </div>
-
-      <div className="App">
-        {isButtonClicked && (
-          <div>
-            <div className="card">
-              <h2>
-                {currentAccountType} balance: {currentOwnerBalance}{" "}
-                {currentOwnerCurrency}
-              </h2>
-            </div>
-
-            {showSavingsGoal && (
-              <div className="app-container">
-                <div className="goal-card">
-                  <h2>Savings Goal</h2>
-                  <p>
-                    Your savings goal: {savingsGoal} {currentOwnerCurrency}
-                  </p>
-                  <p>{purpose}</p>
-                  <div className="progress-circle">
-                    <CircularProgressbar
-                      value={progressPercentage}
-                      text={`${progressPercentage.toFixed(0)}%`}
-                      strokeWidth={10}
-                      styles={{
-                        root: { width: "200px", height: "200px", color: "" },
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="side-by-side-container">
-              <div className="negative-progress-bars-container">
-                <h3>
-                  {" "}
-                  <button onClick={() => setShowExpenses(!showExpenses)}>
-                    {showExpenses ? "Hide" : "Show"} Expenses:
-                  </button>
-                </h3>
-                <div className="progress-bars-container">
-                  {showExpenses &&
-                    sortTransactions(
-                      Object.entries(negativeTransactionTotals).map(
-                        ([description, totalAmount]) => ({
-                          description,
-                          totalAmount,
-                        })
-                      ),
-                      true
-                    ).map(({ description, totalAmount }) => (
-                      <div
-                        key={description}
-                        className="progress-bar-item"
-                        onClick={() => setSelectedCategory(description)}
-                      >
-                        <p className="description-label"> {description}</p>
-
-                        <div className="progress-bar">
-                          <div
-                            className={`progress-fill ${
-                              totalAmount < 0 ? "negative" : "positive"
-                            }`}
-                            style={{
-                              width: `${
-                                (Math.abs(totalAmount) / ARBITRARY_GOAL) * 100
-                              }%`,
-                            }}
-                          />
-                        </div>
-
-                        <p className="total-amount">
-                          {totalAmount.toFixed(2)} {currentOwnerCurrency}
-                        </p>
-                      </div>
-                    ))}
-                </div>
-              </div>
-              {(showExpenses || showIncome) && (
-                <div className="dateDropdown">
-                  <div className="monthDropdown">
-                    <label></label>
-                    <select
-                      value={selectedMonth}
-                      onChange={(e) => {
-                        if (e.target.value === "All Year") {
-                          setSelectedMonth("");
-                        } else {
-                          setSelectedMonth(e.target.value);
-                        }
-                      }}
-                    >
-                      {months.map((month, index) => (
-                        <option
-                          key={index}
-                          value={month === "All Year" ? null : month}
-                        >
-                          {month}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="yearDropdown">
-                    <label></label>
-                    <select
-                      value={selectedYear}
-                      onChange={(e) => setSelectedYear(e.target.value)}
-                    >
-                      {years.map((year, index) => (
-                        <option key={index} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )}
-              <div className="positive-progress-bars-container">
-                <h3>
-                  {" "}
-                  <button onClick={() => setShowIncome(!showIncome)}>
-                    {showIncome ? "Hide" : "Show"} Income:
-                  </button>
-                </h3>
-                <div className="progress-bars-container">
-                  {showIncome &&
-                    sortTransactions(
-                      Object.entries(positiveTransactionTotals).map(
-                        ([description, totalAmount]) => ({
-                          description,
-                          totalAmount,
-                        })
-                      )
-                    ).map(({ description, totalAmount }) => (
-                      <div
-                        key={description}
-                        className="progress-bar-item"
-                        onClick={() => setSelectedCategory(description)}
-                      >
-                        <p className="description-label"> {description}</p>
-                        <div className="progress-bar">
-                          <div
-                            className={`progress-fill ${
-                              totalAmount < 0 ? "negative" : "positive"
-                            }`}
-                            style={{
-                              width: `${(totalAmount / ARBITRARY_GOAL) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        <p className="total-amount">
-                          {totalAmount.toFixed(2)} {currentOwnerCurrency}
-                        </p>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="transaction-dropdown">
-              <button onClick={toggleShowTransactions}>
-                {showTransactions
-                  ? "Hide Recent Transactions"
-                  : "Show Recent Transactions"}
-              </button>
-
-              {showTransactions && (
-                <div className="selected-category-transactions">
-                  <h3>
-                    Transactions{selectedCategory && ` for ${selectedCategory}`}
-                  </h3>
-                  <ul>
-                    {transactionData
-                      .filter((transaction) => {
-                        if (!selectedCategory) {
-                          return true;
-                        } else if (selectedCategory === "other") {
-                          for (let keyword in keywordToCategoryMapping) {
-                            if (
-                              transaction.description
-                                .toLowerCase()
-                                .includes(keyword)
-                            ) {
-                              return false;
-                            }
-                          }
-                          return true;
-                        } else {
-                          for (let keyword in keywordToCategoryMapping) {
-                            if (
-                              transaction.description
-                                .toLowerCase()
-                                .includes(keyword) &&
-                              keywordToCategoryMapping[keyword] ===
-                                selectedCategory
-                            ) {
-                              return true;
-                            }
-                          }
-                          return false;
-                        }
-                      })
-                      .map((transaction) => (
-                        <li key={transaction.id}>
-                          {transaction.date}, {transaction.description},{" "}
-                          {transaction.amount}, {transaction.currency}
-                        </li>
-                      ))}
-
-                    {((selectedCategory === "Other Expenses" && showExpenses) ||
-                      (selectedCategory === "Other Income" && showIncome)) &&
-                      transactionData
-                        .filter((transaction) => {
-                          let category = null;
-
-                          // Check if any keyword matches the transaction description
-                          for (let keyword in keywordToCategoryMapping) {
-                            if (
-                              transaction.description
-                                .toLowerCase()
-                                .includes(keyword)
-                            ) {
-                              category = keywordToCategoryMapping[keyword];
-                              break;
-                            }
-                          }
-
-                          // If no keyword matches, categorize as "Other Income" or "Other Expenses" based on the transaction amount
-                          if (!category) {
-                            category =
-                              transaction.amount >= 0
-                                ? "Other Income"
-                                : "Other Expenses";
-                          }
-
-                          return category === selectedCategory;
-                        })
-                        .map((transaction) => (
-                          <li key={transaction.id}>
-                            {transaction.date}, {transaction.description},{" "}
-                            {transaction.amount}, {transaction.currency}
-                          </li>
-                        ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+      {isButtonClicked && (
+        <div>
+          <div className="card">
+            <h2>
+              {currentAccountType} balance: {currentOwnerBalance}{" "}
+              {currentOwnerCurrency}
+            </h2>
           </div>
-        )}
-      </div>
-      <img src={yourImage} alt="Example Image" width="900" />
+          {showSavingsGoal && (
+            <div className="app-container">
+              <SavingsGoalCard
+                savingsGoal={savingsGoal}
+                progressPercentage={progressPercentage}
+                currentOwnerCurrency={currentOwnerCurrency}
+              />
+            </div>
+          )}
 
-      <h2>Don't let your dreams be dreams</h2>
+          <ExpenseIncomeProgressbars
+            showExpenses={showExpenses}
+            setShowExpenses={setShowExpenses}
+            setShowIncome={setShowIncome}
+            showIncome={showIncome}
+            sortTransactions={sortTransactions}
+            negativeTransactionTotals={negativeTransactionTotals}
+            positiveTransactionTotals={positiveTransactionTotals}
+            setSelectedCategory={setSelectedCategory}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+            currentOwnerCurrency={currentOwnerCurrency}
+            months={months}
+            years={years}
+            ARBITRARY_GOAL={ARBITRARY_GOAL}
+          />
+
+          <div>
+            <TransactionDropdown
+              showTransactions={showTransactions}
+              toggleShowTransactions={toggleShowTransactions}
+              transactionData={transactionData}
+              selectedCategory={selectedCategory}
+              keywordToCategoryMapping={keywordToCategoryMapping}
+              showExpenses={showExpenses}
+              showIncome={showIncome}
+            />
+          </div>
+        </div>
+      )}
+
+      <img src={yourImage} alt="Example Image" width="900" />
+      <Footer />
     </>
   );
 }
-
 export default App;

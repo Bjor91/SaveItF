@@ -14,7 +14,6 @@ export   const months = [
     "12",
   ];
 export const years = ["2023"];
-
 export  const keywordToCategoryMapping = {
     meny: "Dagligvare",
     narvesen: "Dagligvare",
