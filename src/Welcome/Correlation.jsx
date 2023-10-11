@@ -7,7 +7,7 @@ const Correlation = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setVisibleItems((prev) => prev + 1); // increment visibleItems by 1
-    }, 2000); // set interval time (2000ms = 2 seconds)
+    }, 1000); // set interval time (2000ms = 2 seconds)
 
     return () => clearInterval(timer); // cleanup interval on component unmount
   }, []); // empty dependency array means this useEffect runs once on mount
