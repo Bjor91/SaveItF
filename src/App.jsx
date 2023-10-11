@@ -16,6 +16,7 @@ import ExpenseIncomeProgressbars from "./components/2. Content component/Expense
 import { fetchTransactions } from "./components/4. Utility component/fetchTransactions";
 import { fetchAccounts } from "./components/4. Utility component/fetchAccounts";
 import { handleIsScrollable } from "./components/4. Utility component/handleIsScrollable";
+import DreamImage from "./components/2. Content component/DreamImage/DreamImage";
 
 const ARBITRARY_GOAL = 20000;
 
@@ -105,6 +106,7 @@ function App({ savingsGoal, purpose }) {
 
       {isButtonClicked && (
         <div>
+          
           <div className="card">
             <h2>
               {currentAccountType} balance: {currentOwnerBalance}{" "}
@@ -113,12 +115,14 @@ function App({ savingsGoal, purpose }) {
           </div>
           {showSavingsGoal && (
             <div className="app-container">
+              <DreamImage goal={purpose} />
               <SavingsGoalCard
                 savingsGoal={savingsGoal}
                 progressPercentage={progressPercentage}
                 currentOwnerCurrency={currentOwnerCurrency}
               />
             </div>
+            
           )}
 
           <ExpenseIncomeProgressbars

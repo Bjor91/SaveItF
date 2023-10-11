@@ -7,8 +7,8 @@ import "./index.css";
 import { useState } from "react";
 
 function Main() {
-  const [savingsGoal, setSavingsGoal] = useState(20000);
-  const [purpose, setPurpose] = useState("Economic security");
+  const [savingsGoal, setSavingsGoal] = useState(40000);
+  const [purpose, setPurpose] = useState("Rainy day fund");
 
   return (
     <Router>
