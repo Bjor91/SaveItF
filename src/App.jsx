@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { months, years, keywordToCategoryMapping } from "./config";
-import axios from "axios";
+
 import "react-circular-progressbar/dist/styles.css";
 import yourImage from "./assets/images/53046423664_b63955243d_6k.jpg";
 

@@ -1,0 +1,23 @@
+
+.listOfCorrelations {
+    padding: 10em; 
+    width: 100%; 
+    margin: 20px;
+    max-width: 800px;
+    
+}
+
+
+.listOfCorrelations li {
+    text-align: start;;
+    list-style: none;
+    padding: 10px;
+}
+.fade {
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Adjust timing and easing function as desired */
+  }
+  
+  .fade.visible {
+    opacity: 1;
+  }
