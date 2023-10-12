@@ -1,6 +1,8 @@
 import React from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 
+//Responsible for showing the savings goal card.
+
 const SavingsGoalCard = ({
   savingsGoal,
   progressPercentage,
@@ -11,7 +13,7 @@ const SavingsGoalCard = ({
     <div className="goal-card">
       <h2>Savings Goal</h2>
       <p>
-         {savingsGoal} {currentOwnerCurrency} for {purpose}
+        {savingsGoal} {currentOwnerCurrency} for {purpose}
       </p>
       <div className="progress-circle">
         <CircularProgressbar

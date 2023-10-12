@@ -3,6 +3,8 @@ import IncomeProgressBars from "./IncomeProgressbars";
 import ExpenseProgressBars from "./ExpenseProgressBars";
 import DateDropdown from "./DateDropdown";
 
+/*Responsible for the container that includes income/expense progressbar and dateselector*/
+
 function ExpenseIncomeProgressbars({
   showExpenses,
   showIncome,

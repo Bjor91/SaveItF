@@ -1,5 +1,7 @@
 import React from "react";
 
+/*Responsible for producing progressbars based on positive transactions*/
+
 function IncomeProgressBars({
   showIncome,
   setShowIncome,
@@ -7,7 +9,7 @@ function IncomeProgressBars({
   setSelectedCategory,
   ARBITRARY_GOAL,
   currentOwnerCurrency,
-  sortTransactions, // ensure you pass this function as prop, or define it within this component if it's not dependent on the outer state
+  sortTransactions,
 }) {
   return (
     <div className="positive-progress-bars-container">

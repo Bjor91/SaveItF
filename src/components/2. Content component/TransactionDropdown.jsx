@@ -1,5 +1,8 @@
 import React from "react";
 
+/*module responsible for showing the transactions in the dropdown. 
+Sorts the transactions by date and category if wanted. */
+
 function TransactionDropdown({
   showTransactions,
   toggleShowTransactions,

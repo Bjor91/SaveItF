@@ -1,5 +1,7 @@
 import axios from "axios";
 
+//handles fetching transactions from the backend
+
 export const fetchTransactions = async (
   accountId,
   selectedMonth,

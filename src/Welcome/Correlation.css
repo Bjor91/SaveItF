@@ -15,7 +15,7 @@
 }
 .fade {
     opacity: 0;
-    transition: opacity 1s ease-in-out; /* Adjust timing and easing function as desired */
+    transition: opacity 1s ease-in-out;
   }
   
   .fade.visible {

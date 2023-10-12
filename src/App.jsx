@@ -4,13 +4,12 @@ import "./App.css";
 import { months, years, keywordToCategoryMapping } from "./config";
 
 import "react-circular-progressbar/dist/styles.css";
+//importing modules
 import yourImage from "./assets/images/53046423664_b63955243d_6k.jpg";
-
 import Header from "./components/1. Header component/Header";
 import AccountButtonsContainer from "./components/1. Header component/AccountButtonsContainer";
 import SavingsGoalCard from "./components/2. Content component/SavingsGoalCard";
 import Footer from "./components/3. Footer component/Footer component";
-
 import TransactionDropdown from "./components/2. Content component/transActionDropdown";
 import ExpenseIncomeProgressbars from "./components/2. Content component/Expenses and Income visuals/ExpenseIncomeProgressbars";
 import { fetchTransactions } from "./components/4. Utility component/fetchTransactions";
@@ -52,11 +51,12 @@ function App({ savingsGoal, purpose }) {
       }
     });
   };
-
   const progressPercentage = (currentOwnerBalance / savingsGoal) * 100;
   const toggleShowTransactions = () => {
     setShowTransactions(!showTransactions);
   };
+
+  //useEffect hooks
   useEffect(() => {
     handleIsScrollable(setIsScrollable);
   }, []);
@@ -76,6 +76,7 @@ function App({ savingsGoal, purpose }) {
     );
   }, [accountId, selectedMonth]);
 
+  //set constants for account data
   const handleSetConstant = (
     newAccountId,
     balance,
@@ -106,7 +107,6 @@ function App({ savingsGoal, purpose }) {
 
       {isButtonClicked && (
         <div>
-          
           <div className="card">
             <h2>
               {currentAccountType} balance: {currentOwnerBalance}{" "}
@@ -120,10 +120,9 @@ function App({ savingsGoal, purpose }) {
                 savingsGoal={savingsGoal}
                 progressPercentage={progressPercentage}
                 currentOwnerCurrency={currentOwnerCurrency}
-                purpose = {purpose}
+                purpose={purpose}
               />
             </div>
-            
           )}
 
           <ExpenseIncomeProgressbars

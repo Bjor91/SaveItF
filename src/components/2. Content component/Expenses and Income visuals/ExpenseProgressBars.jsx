@@ -1,5 +1,7 @@
 import React from "react";
 
+/*Responsible for producing progressbars based on negative transactions*/
+
 function ExpenseIncomeProgressbars({
   showExpenses,
   setShowExpenses,
